@@ -54,7 +54,12 @@ type ETCDConfig struct {
 
 func Listen(ctx context.Context, config Config) (ETCDConfig, error) {
 	driver, dsn := ParseStorageEndpoint(config.Endpoint)
+	logrus.Println(driver)
+	logrus.Println(dsn)
+	logrus.Println("-------------------------")
 	if driver == ETCDBackend {
+		logrus.Println("caiu dentro do if aqui")
+		logrus.Println("-----------------------------")
 		return ETCDConfig{
 			Endpoints:   strings.Split(config.Endpoint, ","),
 			TLSConfig:   config.BackendTLSConfig,
