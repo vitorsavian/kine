@@ -67,6 +67,8 @@ func Listen(ctx context.Context, config Config) (ETCDConfig, error) {
 		return ETCDConfig{}, errors.Wrap(err, "building kine")
 	}
 
+	logrus.Panic("chegou aqui no negocio do kine")
+
 	if config.MetricsRegisterer != nil {
 		config.MetricsRegisterer.MustRegister(
 			metrics.SQLTotal,
