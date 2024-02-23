@@ -104,10 +104,19 @@ func Listen(ctx context.Context, config Config) (ETCDConfig, error) {
 	endpoint := endpointURL(config, listener)
 	logrus.Infof("Kine available at %s", endpoint)
 
+	// Return a empty tls config if we do not receive any tls config
+	if config.ServerTLSConfig == (Config{}.ServerTLSConfig) {
+		return ETCDConfig{
+			LeaderElect: leaderelect,
+			Endpoints:   []string{endpoint},
+			TLSConfig:   tls.Config{},
+		}, nil
+	}
+
 	return ETCDConfig{
 		LeaderElect: leaderelect,
 		Endpoints:   []string{endpoint},
-		TLSConfig:   tls.Config{},
+		TLSConfig:   config.ServerTLSConfig,
 	}, nil
 }
 
